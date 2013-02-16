@@ -36,7 +36,7 @@ namespace SmallDataStore
 		public override IEnumerable<T> GetAll<T>()
 		{
 			var fileName = GetFileName<T>();
-			if (System.IO.File.Exists(fileName))
+			if (!System.IO.File.Exists(fileName))
 				return Enumerable.Empty<T>();
 
 			var str = System.IO.File.ReadAllText(fileName);
