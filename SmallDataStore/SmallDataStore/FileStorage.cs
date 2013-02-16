@@ -7,18 +7,18 @@ using System.Web.Script.Serialization;
 
 namespace SmallDataStore
 {
-	public class SmallStorage : SimpleStorageBase
+	public class FileStorage : SimpleStorageBase
 	{
 		private readonly string _filePath = @"C:\Users\Public";
 		private readonly string _applicationName;
 
-		public SmallStorage(string applicationName, string filePath)
+		public FileStorage(string applicationName, string filePath)
 			: this(applicationName)
 		{
 			_filePath = filePath;
 		}
 
-		public SmallStorage(string applicationName)
+		public FileStorage(string applicationName)
 		{
 			_applicationName = applicationName;
 		}
