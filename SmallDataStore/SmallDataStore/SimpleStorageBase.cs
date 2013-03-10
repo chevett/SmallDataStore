@@ -9,12 +9,21 @@ namespace SmallDataStore
 	public abstract class SimpleStorageBase : ISmallStorage
 	{
 		public abstract IEnumerable<T> GetAll<T>() where T : ISmallStorageItem;
-
-		protected abstract void SaveAll<T>(List<T> list);
+		public abstract void DeleteAll<T>() where T : ISmallStorageItem;
+		public abstract void SaveAll<T>(IEnumerable<T> list) where T : ISmallStorageItem;
 
 		public T Get<T>(string key) where T : ISmallStorageItem
 		{
 			return GetAll<T>().SingleOrDefault(i => i.GetKey() == key);
+		}
+
+		public void Delete<T>(string key) where T : ISmallStorageItem
+		{
+			var list = GetAll<T>()
+				.Where(i => i.GetKey() != key)
+				.ToList();
+
+			SaveAll(list);
 		}
 
 		public void Save<T>(T item) where T : ISmallStorageItem

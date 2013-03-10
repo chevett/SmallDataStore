@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,35 +26,40 @@ namespace SmallDataStore
 
 		private string GetFileName<T>()
 		{
-			return System.IO.Path.Combine(GetDirectoryName<T>(), string.Format("{0}.txt", typeof(T).Name));
+			return Path.Combine(GetDirectoryName<T>(), string.Format("{0}.txt", typeof(T).Name));
 		}
 
 		private string GetDirectoryName<T>()
 		{
-			return System.IO.Path.Combine(_filePath, _applicationName);
+			return Path.Combine(_filePath, _applicationName);
+		}
+
+		public override void DeleteAll<T>()
+		{
+			File.Delete(GetFileName<T>());
 		}
 
 		public override IEnumerable<T> GetAll<T>()
 		{
 			var fileName = GetFileName<T>();
-			if (!System.IO.File.Exists(fileName))
+			if (!File.Exists(fileName))
 				return Enumerable.Empty<T>();
 
-			var str = System.IO.File.ReadAllText(fileName);
+			var str = File.ReadAllText(fileName);
 			var jsonConvertor = new JavaScriptSerializer();
 
 			return jsonConvertor.Deserialize<List<T>>(str);
 		}
 
-		protected override void SaveAll<T>(List<T> list)
+		public override void SaveAll<T>(IEnumerable<T> list)
 		{
 			var jsonConvertor = new JavaScriptSerializer();
 			var str = jsonConvertor.Serialize(list);
 
-			if (!System.IO.Directory.Exists(GetDirectoryName<T>()))
-				System.IO.Directory.CreateDirectory(GetDirectoryName<T>());
+			if (!Directory.Exists(GetDirectoryName<T>()))
+				Directory.CreateDirectory(GetDirectoryName<T>());
 
-			System.IO.File.WriteAllText(GetFileName<T>(), str);
+			File.WriteAllText(GetFileName<T>(), str);
 		}
 	}
 }

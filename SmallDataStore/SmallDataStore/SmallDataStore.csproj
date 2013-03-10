@@ -44,7 +44,6 @@
     <Compile Include="FileStorage.cs" />
     <Compile Include="ISmallStorage.cs" />
     <Compile Include="ISmallStorageItem.cs" />
-    <Compile Include="MemoryStorage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SimpleStorageBase.cs" />
   </ItemGroup>

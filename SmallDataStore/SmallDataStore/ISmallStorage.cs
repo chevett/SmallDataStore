@@ -14,7 +14,16 @@ namespace SmallDataStore
 		T Get<T>(string key)
 			where T : ISmallStorageItem;
 
+		void DeleteAll<T>()
+			where T : ISmallStorageItem;
+
+		void Delete<T>(string key)
+			where T : ISmallStorageItem;
+
 		void Save<T>(T item)
+			where T : ISmallStorageItem;
+
+		void SaveAll<T>(IEnumerable<T> all)
 			where T : ISmallStorageItem;
 	}
 }
